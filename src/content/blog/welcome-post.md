@@ -1,30 +1,35 @@
 ---
-title: "Welcome to My Blog"
-description: "An introduction to my blog where I'll share thoughts on web development, design, and technology."
+title: "De las fábricas al código: Mi viaje hacia el desarrollo web"
+description: "Mi historia: de trabajar en construcción y fábricas a convertirse en desarrollador web, y las lecciones de resiliencia, trabajo en equipo y estoicismo que marcaron el camino."
 image: "./blog_post.jpg"
-publishDate: "2025-10-30"
-tags: ["Introduction", "Web Development"]
+publishDate: "2025-12-03"
+tags: ["Desarrollo Web", "Estoicismo"]
+
 ---
 
-# Welcome to My Blog!
+Hola, soy Andrés. Quiero compartirte mi historia real: cómo pasé de trabajar en fábricas y construcción a convertirme en desarrollador web, y todo lo que aprendí en ese proceso.
 
-Hello and welcome to my blog! I'm excited to share my journey, thoughts, and experiences in the world of web development and technology.
+## De la construcción a un sueño postergado
 
-## What to Expect
+Durante años trabajé en construcción, fábricas, instalaciones y más tarde en una oficina haciendo presupuestos. Eran trabajos necesarios, pero no conectaban con lo que realmente me apasionaba. Desde adolescente la programación era mi refugio secreto. Todo empezó con **Ragnarok Online**: descubrí que podía crear servidores privados y eso me abrió un mundo nuevo. Sin mucha guía, aprendí C, MySQL, PHP… lo justo para avanzar motivado por pura curiosidad.
 
-In this blog, you can expect:
+Aun así, la vida tomó otros rumbos. Por temas económicos tuve que pausar esos sueños y dedicarme a lo que tocaba. Pasaron años hasta que un día decidí que no quería seguir aplazándolo:
+**"Voy a arriesgarme."**
+Con el apoyo de mi esposa y mi familia, renuncié a la estabilidad y me lancé a estudiar desarrollo web de verdad. Lo hice por mí, pero también por mi hija: quería que viera a su papá perseguir lo que ama.
 
-- **Technical tutorials** on modern web development
-- **Project showcases** and case studies
-- **Thoughts on design** and user experience
-- **Industry trends** and insights
+## La lección más valiosa: - ego + el trabajo en equipo
 
-## About Me
+Con el tiempo entendí mis preferencias por el uso de ciertos frameworks y las herramientas que son solo eso: herramientas. Lo importante es el valor que logramos construir **en equipo**. En el libro *Cómo ser un estoico*, lo expresan así:
 
-I'm a passionate developer who loves creating beautiful and functional web applications. With years of experience in the field, I've worked on a variety of projects ranging from small startups to large enterprise applications.
+>_"La pelota es solo un medio para alcanzar un fin… lo que importa es lo que uno hace con ella."_ **Massimo Pigliucci**
 
-## Let's Connect
+Esa frase me cambió la perspectiva. Dejó de importarme quién tenía la razón y empezó a importarme cómo podía aportar, cómo podía ayudar a otros a crecer y cómo juntos resolvíamos problemas reales. Esa actitud, aprendida en las fábricas, es la que hoy me permite crecer como desarrollador en **nojau**.
 
-I'd love to hear from you! Feel free to reach out through any of my social media channels or send me an email.
+## Reflexión final
 
-Thanks for stopping by!
+Mi camino de las fábricas al código no ha sido perfecto ni directo, pero cada paso me ha traído hasta aquí. Aprendí que el verdadero progreso está en el trabajo en equipo, en dejar el ego a un lado y en apostarle a los sueños, incluso cuando el miedo pesa.
+
+Si tú también tienes un sueño guardado, este es tu recordatorio: vale la pena intentarlo. La vida es demasiado corta para no dedicarla a lo que amas.
+
+¡Gracias por leer mi historia!
+
