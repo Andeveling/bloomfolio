@@ -3,6 +3,7 @@ import Layout from "./Layout.astro";
 import { Image } from "astro:assets";
 import SkillBadge from "../components/SkillBadge.astro";
 import { ChevronLeft } from "@lucide/astro";
+import { formatDate, toISODateTime } from "../utils/formats";
 
 interface Props {
   title: string;
@@ -16,14 +17,6 @@ interface Props {
 
 const { title, description, publishDate, updatedDate, image, tags, slug } =
   Astro.props;
-
-function formatDate(date: Date) {
-  return date.toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
-}
 
 // Calculate reading time (rough estimate based on word count)
 const content = await Astro.slots.render("default");
@@ -76,7 +69,7 @@ const readingTime = Math.ceil(wordCount / 200); // Average reading speed: 200 wo
         class="flex flex-wrap items-center gap-4 text-sm text-base-content/60"
       >
         <time
-          datetime={publishDate.toISOString()}
+          datetime={toISODateTime(publishDate)}
           transition:name={`blog-date-${slug}`}
         >
           {formatDate(publishDate)}

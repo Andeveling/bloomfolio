@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
+import { formatPeriod, toISODateTime } from "../utils/formats";
 
 interface Props {
   collection: "work" | "education";
@@ -32,17 +33,7 @@ const sortedEntries = entries.sort(
   (a, b) => b.data.startDate.getTime() - a.data.startDate.getTime()
 );
 
-function formatPeriod(startDate: Date, endDate?: Date) {
-  const options: Intl.DateTimeFormatOptions = {
-    month: "short",
-    year: "numeric",
-  };
-  const start = startDate.toLocaleDateString("en-US", options);
-  const end = endDate
-    ? endDate.toLocaleDateString("en-US", options)
-    : "Present";
-  return `${start} - ${end}`;
-}
+// Use formatPeriod from src/utils/formats for localized formatting
 
 // Render markdown content for each entry
 const entriesWithContent = await Promise.all(
@@ -78,6 +69,14 @@ const entriesWithContent = await Promise.all(
               >
                 <time
                   class={`font-mono text-sm text-base-content/70 block italic ${index % 2 === 0 ? "text-end" : ""}`}
+                  datetime={
+                    entry.data.startDate
+                      ? toISODateTime(entry.data.startDate) +
+                        (entry.data.endDate
+                          ? "/" + toISODateTime(entry.data.endDate)
+                          : "")
+                      : ""
+                  }
                 >
                   {formatPeriod(entry.data.startDate, entry.data.endDate)}
                 </time>

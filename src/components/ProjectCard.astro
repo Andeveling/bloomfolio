@@ -8,19 +8,8 @@ interface Props {
   project: CollectionEntry<"projects">;
 }
 
+import { formatPeriod, toISODateTime } from "../utils/formats";
 const { project } = Astro.props;
-
-function formatPeriod(startDate: Date, endDate?: Date) {
-  const options: Intl.DateTimeFormatOptions = {
-    month: "short",
-    year: "numeric",
-  };
-  const start = startDate.toLocaleDateString("en-US", options);
-  const end = endDate
-    ? endDate.toLocaleDateString("en-US", options)
-    : "Present";
-  return `${start} - ${end}`;
-}
 ---
 
 <article class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
@@ -39,7 +28,15 @@ function formatPeriod(startDate: Date, endDate?: Date) {
     <h3 class="card-title hover:text-primary transition-colors">
       <a href={`/projects/${project.id}`}>{project.data.title}</a>
     </h3>
-    <time class="text-sm text-base-content/60">
+    <time
+      class="text-sm text-base-content/60"
+      datetime={project.data.startDate
+        ? toISODateTime(project.data.startDate) +
+          (project.data.endDate
+            ? "/" + toISODateTime(project.data.endDate)
+            : "")
+        : ""}
+    >
       {formatPeriod(project.data.startDate, project.data.endDate)}
     </time>
     <p class="text-base-content/80">{project.data.description}</p>

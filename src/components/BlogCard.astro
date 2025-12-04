@@ -1,21 +1,12 @@
 ---
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
-
+import { formatDate, toISODateTime } from "../utils/formats";
 interface Props {
   post: CollectionEntry<"blog">;
 }
 
 const { post } = Astro.props;
-
-function formatDate(date: Date) {
-  const options: Intl.DateTimeFormatOptions = {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  };
-  return date.toLocaleDateString("en-US", options);
-}
 ---
 
 <div class="card image-full shadow-xl hover:shadow-2xl transition-shadow">
@@ -30,9 +21,15 @@ function formatDate(date: Date) {
     >
       <a href={`/blog/${post.id}`}>{post.data.title}</a>
     </h3>
-    <time class="text-sm text-base-100-content/80">
+    <time
+      class="text-sm text-base-100-content/80"
+      datetime={toISODateTime(post.data.publishDate)}
+    >
       {formatDate(post.data.publishDate)}
     </time>
+    <div>
+      {formatDate(post.data.publishDate)}
+    </div>
     <p class="text-base-100-content/90 line-clamp-2">{post.data.description}</p>
   </div>
 </div>

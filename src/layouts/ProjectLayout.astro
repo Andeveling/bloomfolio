@@ -3,6 +3,7 @@ import Layout from "./Layout.astro";
 import { Image } from "astro:assets";
 import SkillBadge from "../components/SkillBadge.astro";
 import { ExternalLink } from "@lucide/astro";
+import { formatPeriod, toISODateTime } from "../utils/formats";
 
 interface Props {
   title: string;
@@ -26,17 +27,7 @@ const {
   sourceLink,
 } = Astro.props;
 
-function formatPeriod(startDate: Date, endDate?: Date) {
-  const options: Intl.DateTimeFormatOptions = {
-    month: "short",
-    year: "numeric",
-  };
-  const start = startDate.toLocaleDateString("en-US", options);
-  const end = endDate
-    ? endDate.toLocaleDateString("en-US", options)
-    : "Present";
-  return `${start} - ${end}`;
-}
+// use formatPeriod and toISODateTime from src/utils/formats for localization and consistency
 
 // Calculate project duration
 function calculateDuration(startDate: Date, endDate?: Date) {
@@ -103,7 +94,13 @@ function calculateDuration(startDate: Date, endDate?: Date) {
       <div
         class="flex flex-wrap items-center gap-4 text-sm text-base-content/60 mb-6"
       >
-        <span class="font-semibold">{formatPeriod(startDate, endDate)}</span>
+        <time
+          class="font-semibold"
+          datetime={startDate
+            ? toISODateTime(startDate) +
+              (endDate ? "/" + toISODateTime(endDate) : "")
+            : ""}>{formatPeriod(startDate, endDate)}</time
+        >
         <span>•</span>
         <span>{calculateDuration(startDate, endDate)}</span>
         {

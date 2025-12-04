@@ -23,6 +23,9 @@ importers:
       daisyui:
         specifier: ^5.5.5
         version: 5.5.5
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
       tailwindcss:
         specifier: ^4.1.17
         version: 4.1.17
@@ -831,6 +834,9 @@ packages:
 
   daisyui@5.5.5:
     resolution: {integrity: sha512-ekvI93ZkWIJoCOtDl0D2QMxnWvTejk9V5nWBqRv+7t0xjiBXqAK5U6o6JE2RPvlIC3EqwNyUoIZSdHX9MZK3nw==}
+
+  date-fns@4.1.0:
+    resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
 
   debug@4.4.3:
     resolution: {integrity: sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==}
@@ -2635,6 +2641,8 @@ snapshots:
       css-tree: 2.2.1
 
   daisyui@5.5.5: {}
+
+  date-fns@4.1.0: {}
 
   debug@4.4.3:
     dependencies:

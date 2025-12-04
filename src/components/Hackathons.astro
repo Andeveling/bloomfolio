@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { formatPeriod, toISODateTime } from "../utils/formats";
 
 const hackathonEntries = await getCollection("hackathons");
 
@@ -8,21 +9,7 @@ const sortedHackathons = hackathonEntries.sort(
   (a, b) => b.data.startDate.getTime() - a.data.startDate.getTime()
 );
 
-function formatPeriod(startDate: Date, endDate?: Date) {
-  const options: Intl.DateTimeFormatOptions = {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  };
-  const start = startDate.toLocaleDateString("en-US", options);
-
-  if (endDate && endDate.getTime() !== startDate.getTime()) {
-    const end = endDate.toLocaleDateString("en-US", options);
-    return `${start} - ${end}`;
-  }
-
-  return start;
-}
+// use formatPeriod from src/utils/formats for localized formatting
 ---
 
 <section id="hackathons" class="py-20 px-4">
@@ -54,7 +41,17 @@ function formatPeriod(startDate: Date, endDate?: Date) {
                   </div>
                 )}
                 <div class="flex-1">
-                  <time class="text-sm text-base-content/60">
+                  <time
+                    class="text-sm text-base-content/60"
+                    datetime={
+                      hackathon.data.startDate
+                        ? toISODateTime(hackathon.data.startDate) +
+                          (hackathon.data.endDate
+                            ? "/" + toISODateTime(hackathon.data.endDate)
+                            : "")
+                        : ""
+                    }
+                  >
                     {formatPeriod(
                       hackathon.data.startDate,
                       hackathon.data.endDate
