@@ -1,5 +1,5 @@
 ---
-import { ArrowRight, ChevronLeft } from "@lucide/astro";
+import { ArrowRight, Search, Calendar, Tag } from "@lucide/astro";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
@@ -7,7 +7,7 @@ import { compareDesc, formatDate, toISODateTime } from "../../utils/formats";
 
 const blogPosts = await getCollection("blog");
 
-// Sort by publish date, most recent first (using date-fns for safety)
+// Sort by publish date, most recent first
 const sortedPosts = blogPosts.sort((a, b) =>
   compareDesc(
     typeof a.data.publishDate === "string"
@@ -15,179 +15,218 @@ const sortedPosts = blogPosts.sort((a, b) =>
       : a.data.publishDate,
     typeof b.data.publishDate === "string"
       ? new Date(b.data.publishDate)
-      : b.data.publishDate
-  )
+      : b.data.publishDate,
+  ),
 );
 
-// Get unique tags from all posts for filters
+// Get unique tags
 const allTags = [...new Set(blogPosts.flatMap((post) => post.data.tags || []))];
-const displayTags = allTags.slice(0, 5);
-
-// ...now using format utilities from src/utils/formats.ts
+const displayTags = allTags.slice(0, 8);
 
 function getFirstTag(tags?: string[]) {
-  return tags && tags.length > 0 ? tags[0].toUpperCase() : "BLOG";
+  return tags && tags.length > 0 ? tags[0] : "Blog";
 }
 ---
 
 <Layout
   title="Blog - Andres Parra"
-  description="Lee mis pensamientos, historias e ideas sobre desarrollo, diseño y tecnología."
+  description="Pensamientos, historias e ideas sobre desarrollo, diseño y tecnología."
 >
-  <main class="max-w-6xl mx-auto px-4 py-20">
-    <!-- Header -->
-    <div class="text-center mb-12">
-      <h1 class="text-5xl font-bold mb-4">Blog</h1>
-      <p class="text-xl text-base-content/70">
-        Lee mis pensamientos, historias e ideas sobre desarrollo, diseño y
-        tecnología.
+  <main class="max-w-6xl mx-auto px-4 py-16 min-h-screen">
+    <!-- Header & Search -->
+    <div class="mb-16 text-center max-w-2xl mx-auto">
+      <h1 class="text-5xl font-bold mb-4 tracking-tight text-base-content">
+        Blog
+      </h1>
+      <p class="text-xl text-base-content/60 mb-10 leading-relaxed">
+        Explora mis últimas publicaciones en mi blog acerca de "todo un poco".
       </p>
-    </div>
 
-    <!-- Back to Home -->
-    <div class="mb-8">
-      <a href="/" class="btn btn-ghost btn-sm gap-1">
-        <ChevronLeft class="size-5" />
-        Volver
-      </a>
-    </div>
-
-    <!-- Main Layout: Sidebar + Posts -->
-    {
-      sortedPosts.length === 0 ? (
-        <div class="text-center py-20">
-          <p class="text-2xl text-base-content/60">
-            No hay publicaciones en el blog todavía. ¡Vuelve pronto!
-          </p>
+      <!-- Search Bar Visual -->
+      <div class="relative group max-w-xl mx-auto">
+        <div
+          class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none"
+        >
+          <Search
+            class="size-5 text-base-content/40 group-focus-within:text-primary transition-colors"
+          />
         </div>
-      ) : (
-        <div class="flex flex-col lg:flex-row gap-8">
-          {/* Sidebar */}
-          <aside class="lg:w-64 shrink-0">
-            {/* Quick Filters */}
-            <div class="mb-8">
-              <h3 class="font-semibold text-base-content mb-4">Filtros :</h3>
-              <div class="flex flex-col gap-3">
-                {displayTags.map((tag, index) => (
-                  <label class="flex items-center gap-3 cursor-pointer group">
-                    <input
-                      type="checkbox"
-                      class="checkbox checkbox-sm checkbox-primary"
-                      data-filter-tag={tag}
-                    />
-                    <span class="text-sm text-base-content/80 group-hover:text-primary transition-colors">
-                      {tag}
-                    </span>
-                  </label>
-                ))}
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Buscar publicaciones..."
+          class="input input-lg w-full pl-14 bg-base-100 border-2 border-base-300 focus:border-primary focus:ring-4 focus:ring-primary/10 focus:outline-none transition-all rounded-full shadow-sm hover:shadow-md text-lg"
+        />
+        <div
+          class="absolute inset-y-0 right-0 pr-5 flex items-center pointer-events-none"
+        >
+          <kbd
+            class="kbd kbd-sm bg-base-200 border-none text-xs text-base-content/50 rounded-full px-2"
+            >⌘ K</kbd
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Chips -->
+    <div
+      class="flex flex-wrap justify-center gap-3 mb-12"
+      id="filter-container"
+    >
+      <button
+        class="btn btn-sm h-9 rounded-full px-6 font-medium normal-case border-transparent bg-base-content text-base-100 hover:bg-base-content/90 hover:scale-105 transition-all"
+        data-filter="all"
+      >
+        Todos
+      </button>
+      {
+        displayTags.map((tag) => (
+          <button
+            class="btn btn-sm h-9 btn-ghost bg-base-200 rounded-full px-6 font-medium normal-case hover:bg-base-300 hover:scale-105 transition-all"
+            data-filter={tag}
+          >
+            {tag}
+          </button>
+        ))
+      }
+    </div>
+
+    <!-- Posts Grid -->
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+      id="posts-list"
+    >
+      {
+        sortedPosts.map((post) => (
+          <a
+            href={`/blog/${post.id}`}
+            class="blog-card group flex flex-col bg-base-100 rounded-3xl overflow-hidden border border-base-200 hover:border-primary/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 h-full"
+            data-tags={JSON.stringify(post.data.tags || [])}
+            data-title={post.data.title.toLowerCase()}
+          >
+            {/* Image Container */}
+            <div class="relative aspect-[16/10] overflow-hidden bg-base-200">
+              <Image
+                src={post.data.image}
+                alt={post.data.title}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                width={600}
+                height={375}
+                transition:name={`blog-image-${post.id}`}
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </div>
+
+            {/* Content */}
+            <div class="flex flex-col flex-1 p-6">
+              <div class="flex items-center gap-3 mb-4 text-xs font-medium text-base-content/60">
+                <span class="flex items-center gap-1 bg-base-200 px-3 py-1 rounded-full">
+                  <Tag class="size-3" />
+                  {getFirstTag(post.data.tags)}
+                </span>
+                <span class="flex items-center gap-1">
+                  <Calendar class="size-3" />
+                  <time datetime={toISODateTime(post.data.publishDate)}>
+                    {formatDate(post.data.publishDate)}
+                  </time>
+                </span>
+              </div>
+
+              <h3
+                class="text-2xl font-bold text-base-content mb-3 leading-tight group-hover:text-primary transition-colors"
+                transition:name={`blog-title-${post.id}`}
+              >
+                {post.data.title}
+              </h3>
+
+              <p class="text-base text-base-content/70 mb-6 line-clamp-3 flex-1">
+                {post.data.description}
+              </p>
+
+              <div class="flex items-center text-primary font-semibold group-hover:translate-x-2 transition-transform duration-300">
+                Leer artículo <ArrowRight class="ml-2 size-4" />
               </div>
             </div>
-          </aside>
+          </a>
+        ))
+      }
+    </div>
 
-          {/* Blog Posts List */}
-          <div class="flex-1 space-y-6">
-            {sortedPosts.map((post) => (
-              <article
-                class="blog-card group flex flex-col sm:flex-row gap-6 p-4 bg-base-100 rounded-box border border-base-300 hover:border-primary/30 hover:shadow-lg transition-all"
-                data-tags={JSON.stringify(post.data.tags || [])}
-              >
-                {/* Image */}
-                <a
-                  href={`/blog/${post.id}`}
-                  class="sm:w-40 sm:h-32 shrink-0 overflow-hidden rounded-lg block"
-                >
-                  <Image
-                    src={post.data.image}
-                    alt={post.data.title}
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    width={160}
-                    height={128}
-                    transition:name={`blog-image-${post.id}`}
-                  />
-                </a>
-
-                {/* Content */}
-                <div class="flex-1 flex flex-col justify-between">
-                  {/* Top: Category + Date */}
-                  <div class="flex items-center justify-between gap-4 mb-2">
-                    <span
-                      class="text-xs font-semibold tracking-wider text-base-content/60 uppercase"
-                      transition:name={`blog-category-${post.id}`}
-                    >
-                      {getFirstTag(post.data.tags)}
-                    </span>
-                    <time
-                      class="text-xs text-base-content/50"
-                      datetime={toISODateTime(post.data.publishDate)}
-                      transition:name={`blog-date-${post.id}`}
-                    >
-                      {formatDate(post.data.publishDate)}
-                    </time>
-                  </div>
-
-                  {/* Title */}
-                  <h2
-                    class="text-lg font-bold text-base-content group-hover:text-primary transition-colors mb-2"
-                    transition:name={`blog-title-${post.id}`}
-                  >
-                    <a href={`/blog/${post.id}`}>{post.data.title}</a>
-                  </h2>
-
-                  {/* Description */}
-                  <p
-                    class="text-sm text-base-content/70 line-clamp-2 mb-3"
-                    transition:name={`blog-description-${post.id}`}
-                  >
-                    {post.data.description}
-                  </p>
-
-                  {/* Read More Link */}
-                  <div class="flex justify-end">
-                    <a
-                      href={`/blog/${post.id}`}
-                      class="text-sm font-medium text-primary hover:underline inline-flex items-center gap-1 transition-colors"
-                    >
-                      Leer más
-                      <ArrowRight class="size-3" />
-                    </a>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      )
-    }
+    <!-- No Results Message -->
+    <div id="no-results" class="hidden text-center py-12">
+      <p class="text-base-content/50">
+        No se encontraron publicaciones que coincidan con tu búsqueda.
+      </p>
+    </div>
   </main>
 </Layout>
 
 <script>
-  // Simple filter functionality
-  document.addEventListener("DOMContentLoaded", () => {
-    const checkboxes = document.querySelectorAll("[data-filter-tag]");
-    const articles = document.querySelectorAll("[data-tags]");
+  document.addEventListener("astro:page-load", () => {
+    const searchInput = document.getElementById(
+      "search-input",
+    ) as HTMLInputElement;
+    const filterButtons = document.querySelectorAll("[data-filter]");
+    const posts = document.querySelectorAll(".blog-card");
+    const noResults = document.getElementById("no-results");
 
-    checkboxes.forEach((checkbox) => {
-      checkbox.addEventListener("change", () => {
-        const activeFilters = Array.from(checkboxes)
-          .filter((cb) => (cb as HTMLInputElement).checked)
-          .map((cb) => cb.getAttribute("data-filter-tag"));
+    let currentFilter = "all";
+    let currentSearch = "";
 
-        articles.forEach((article) => {
-          const tags = JSON.parse(
-            article.getAttribute("data-tags") || "[]"
-          ) as string[];
+    function filterPosts() {
+      let visibleCount = 0;
 
-          if (activeFilters.length === 0) {
-            (article as HTMLElement).style.display = "";
-          } else {
-            const hasMatch = activeFilters.some((filter) =>
-              tags.includes(filter as string)
-            );
-            (article as HTMLElement).style.display = hasMatch ? "" : "none";
-          }
+      posts.forEach((post) => {
+        const tags = JSON.parse(post.getAttribute("data-tags") || "[]");
+        const title = post.getAttribute("data-title") || "";
+
+        const matchesFilter =
+          currentFilter === "all" || tags.includes(currentFilter);
+        const matchesSearch = title.includes(currentSearch.toLowerCase());
+
+        if (matchesFilter && matchesSearch) {
+          (post as HTMLElement).style.display = "flex";
+          visibleCount++;
+        } else {
+          (post as HTMLElement).style.display = "none";
+        }
+      });
+
+      if (noResults) {
+        noResults.style.display = visibleCount === 0 ? "block" : "none";
+      }
+    }
+
+    // Filter Click Handler
+    filterButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        // Update active state
+        filterButtons.forEach((b) => {
+          b.classList.remove("bg-base-content", "text-base-100");
+          b.classList.add("btn-ghost", "bg-base-200");
         });
+        btn.classList.remove("btn-ghost", "bg-base-200");
+        btn.classList.add("bg-base-content", "text-base-100");
+
+        currentFilter = btn.getAttribute("data-filter") || "all";
+        filterPosts();
       });
     });
+
+    // Search Input Handler
+    if (searchInput) {
+      searchInput.addEventListener("input", (e) => {
+        currentSearch = (e.target as HTMLInputElement).value;
+        filterPosts();
+      });
+
+      // Keyboard shortcut
+      document.addEventListener("keydown", (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+          e.preventDefault();
+          searchInput.focus();
+        }
+      });
+    }
   });
 </script>

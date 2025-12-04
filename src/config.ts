@@ -95,51 +95,30 @@ export interface SiteConfig {
  * Update these values to customize your portfolio
  */
 export const siteConfig: SiteConfig = {
-  name: "Andres Parra",
-  title: "Desarrollador Web | Apasionado por la tecnología y la innovación",
+  name: "Andrés Parra",
+  title: "Desarrollador web con +4 años de trayectoria",
   description:
-    "El ciclo de vida del software cambia sin avisar: los requisitos se modifican, las prioridades se redefinen y los sistemas evolucionan. En medio de ese movimiento constante, nuestra fortaleza está en cómo respondemos: con claridad para comprender, calma para decidir y propósito para construir aquello que sí depende de nosotros.",
+    "Full Stack Developer apasionado por la innovación y el aprendizaje continuo. Llevo desde Jul-2024 impulsando nojau (startup en Pereira) y +4 años creando soluciones web (apps, e‑commerce, blogs). Estudio Análisis y Desarrollo de Software en el SENA, apoyo a compañeros en docencia de programación y me inspiran metodologías como Kaizen.",
   avatar: "../assets/andres.webp",
   location: "🇨🇴 Colombia",
   email: "andeveling@gmail.com",
   socialLinks: {
-    github: "https://github.com/andeveling",
+    github: "https://github.com/Andeveling",
     linkedin: "https://www.linkedin.com/in/andrespsanchez/",
-    twitter: "https://twitter.com/andeveling",
+    twitter: "https://twitter.com/Andeveling",
   },
   enableThemeSelector: true,
   extraLinks: {
-    enable: true,
-    links: [
-      {
-        link: "/blog/guides/bloomfolio-complete-guide",
-        icon: Flower2,
-        label: "Bloomfolio Guide",
-      },
-      {
-        link: "/blog/guides/content-collections-guide",
-        icon: BookOpen,
-        label: "Content Guide",
-      },
-      {
-        link: "/blog/guides/markdown-guide",
-        icon: FileText,
-        label: "Markdown Guide",
-      },
-      {
-        link: "https://github.com/lauroguedes/bloomfolio",
-        icon: CodeXml,
-        label: "GitHub Repo",
-      },
-    ],
+    enable: false,
+    links: [],
   },
   sections: {
-    about: false,
-    projects: false,
-    blog: false,
-    work: false,
-    education: false,
+    about: true,
+    projects: true,
+    blog: true,
+    work: true,
+    education: true,
     hackathons: false,
-    contact: false,
+    contact: true,
   },
 };

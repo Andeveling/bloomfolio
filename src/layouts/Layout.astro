@@ -1,7 +1,5 @@
 ---
 import "../styles/global.css";
-import ThemeToggle from "../components/ThemeToggle.astro";
-import ThemeSelector from "../components/ThemeSelector.astro";
 import FabFlower from "../components/FabFlower.astro";
 import { ClientRouter } from "astro:transitions";
 import { siteConfig } from "../config";
@@ -50,6 +48,14 @@ const origin = Astro.url.origin;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
 
+    <!-- Fonts: Outfit (Google Sans alternative) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- View Transitions -->
     <ClientRouter />
 
@@ -66,7 +72,9 @@ const origin = Astro.url.origin;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={`${origin}/images/og_home.png`} />
   </head>
-  <body class="min-h-screen">
+  <body
+    class="min-h-screen bg-base-100 text-base-content font-sans antialiased selection:bg-primary selection:text-primary-content"
+  >
     <!-- Theme Controls - Fixed Position -->
     <!-- <div class="fixed top-4 right-4 z-50">
       {siteConfig.enableThemeSelector ? <ThemeSelector /> : <ThemeToggle />}
@@ -82,6 +90,14 @@ const origin = Astro.url.origin;
 
     <!-- Smooth Scroll -->
     <style is:global>
+      :root {
+        font-family:
+          "Outfit",
+          system-ui,
+          -apple-system,
+          sans-serif;
+      }
+
       html {
         scroll-behavior: smooth;
       }

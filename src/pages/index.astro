@@ -14,7 +14,7 @@ import andresLogo from "../assets/andres.webp";
 
 // Load about content
 const aboutEntry = await getEntry("about", "about");
-const { Content: AboutContent } = await render(aboutEntry);
+const { Content: AboutContent } = await render(aboutEntry as any);
 ---
 
 <Layout
@@ -32,14 +32,12 @@ const { Content: AboutContent } = await render(aboutEntry);
       socialLinks={siteConfig.socialLinks}
     />
 
- 
-
     <!-- About Section -->
     {
       siteConfig.sections.about && (
         <About
-          title={aboutEntry.data.title}
-          photo={aboutEntry.data.photo}
+          title={aboutEntry?.data.title ?? ""}
+          photo={aboutEntry?.data.photo ?? ""}
           Content={AboutContent}
         />
       )
@@ -73,7 +71,8 @@ const { Content: AboutContent } = await render(aboutEntry);
           color="secondary"
           backgroundColor="base-300"
           icon={GraduationCap}
-          sectionTitle="Education"
+          sectionTitle="Educación y aprendizaje"
+          sectionSubtitle="Mis bases nacieron aquí, pero mi verdadera formación vino de la experiencia, los retos y los errores que me hicieron crecer."
         />
       )
     }

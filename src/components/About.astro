@@ -10,31 +10,59 @@ interface Props {
 const { title, photo, Content } = Astro.props;
 ---
 
-<section id="about" class="py-20 px-4">
-  <div class="max-w-4xl mx-auto">
-    <div class="card card-side bg-base-200 shadow-sm">
+<section id="about" class="relative py-32 px-6 overflow-hidden">
+  <!-- Background gradient -->
+  <div
+    class="absolute inset-0 bg-gradient-to-b from-base-200/30 via-base-100 to-base-100 -z-10"
+  >
+  </div>
+
+  <div class="max-w-5xl mx-auto">
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      <h2
+        class="text-5xl md:text-6xl font-bold mb-6 tracking-tight bg-gradient-to-r from-base-content to-base-content/70 bg-clip-text text-transparent"
+      >
+        {title}
+      </h2>
+    </div>
+
+    <!-- Content Grid -->
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <!-- Photo (if exists) -->
       {
         photo && (
-          <figure class="shrink-0 w-48">
-            <img src={photo} alt={title} />
-          </figure>
+          <div class="relative group">
+            <div class="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000" />
+            <div class="relative rounded-3xl overflow-hidden border border-base-content/10">
+              <img
+                src={photo}
+                alt={title}
+                class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
+          </div>
         )
       }
-      <div class="card-body">
-        <h2 class="card-title text-2xl">{title}</h2>
-        <p class="text-lg">
+
+      <!-- Text Content -->
+      <div class={`prose-google ${!photo ? "md:col-span-2" : ""}`}>
+        <p
+          class="text-xl md:text-2xl text-base-content/60 max-w-3xl mx-auto mb-16 leading-relaxed font-light animate-fade-in-up delay-300"
+        >
           <Content />
         </p>
-        <div class="card-actions justify-end">
-          <div class="tooltip" data-tip="More about me">
-            <a
-              href="https://linkedin.com/in/lauroguedes"
-              target="_blank"
-              class="btn btn-primary"
-            >
-              <Plus class="size-5" />
-            </a>
-          </div>
+
+        <!-- Optional CTA -->
+        <div class="mt-8 flex gap-4">
+          <a
+            href="https://www.linkedin.com/in/andrespsanchez/"
+            target="_blank"
+            class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-base-100 bg-primary hover:bg-primary-focus rounded-xl transition-all duration-300 hover:scale-105"
+          >
+            <Plus class="size-5" />
+            Conecta en LinkedIn
+          </a>
         </div>
       </div>
     </div>

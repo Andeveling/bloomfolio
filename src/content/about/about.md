@@ -1,6 +1,6 @@
 ---
-title: "About Me"
-photo: "https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Destiny&scale=90&backgroundColor=763900,9e5622,ecad80,f2d3b1,c0aede,b6e3f4"
+title: "Sobre mí"
+photo: "/andres.webp"
 ---
 
-I'm a full-stack developer with a passion for creating beautiful, functional, and user-friendly web applications. With experience in **modern frameworks and technologies**, I love turning ideas into reality through code. When I'm not coding, you can find me **exploring new technologies**, contributing to open source, or enjoying a good cup of coffee.
+Full Stack Developer apasionado por la innovación y el aprendizaje continuo. Llevo desde Jul-2024 impulsando nojau (startup en Pereira) y +4 años creando soluciones web (apps, e‑commerce, blogs). Estudio Análisis y Desarrollo de Software en el SENA, apoyo a compañeros en docencia de programación y me inspiran metodologías como Kaizen. Mis lecturas favoritas: “Grit” y “Hábitos Atómicos”.

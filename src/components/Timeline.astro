@@ -33,8 +33,6 @@ const sortedEntries = entries.sort(
   (a, b) => b.data.startDate.getTime() - a.data.startDate.getTime()
 );
 
-// Use formatPeriod from src/utils/formats for localized formatting
-
 // Render markdown content for each entry
 const entriesWithContent = await Promise.all(
   sortedEntries.map(async (entry) => {
@@ -44,138 +42,134 @@ const entriesWithContent = await Promise.all(
 );
 ---
 
-<section id={collection} class={`py-20 px-4 bg-${backgroundColor}`}>
-  <div class={`mx-auto ${variant === "timeline" ? "max-w-4xl" : "max-w-4xl"}`}>
-    <div class="text-center mb-12">
-      <h2 class="text-4xl font-bold">{sectionTitle}</h2>
-      {
-        sectionSubtitle && (
-          <p class="text-base-content/70 mt-2">{sectionSubtitle}</p>
-        )
-      }
+<section id={collection} class="relative py-32 px-6 overflow-hidden">
+  <!-- Subtle background decoration -->
+  {variant === "timeline" && (
+    <div class="absolute right-0 top-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+  )}
+  
+  <div class="max-w-5xl mx-auto">
+    <!-- Section Header -->
+    <div class="text-center mb-20">
+      <h2 class="text-5xl md:text-6xl font-bold mb-6 tracking-tight bg-gradient-to-r from-base-content to-base-content/70 bg-clip-text text-transparent">
+        {sectionTitle}
+      </h2>
+      {sectionSubtitle && (
+        <p class="text-xl text-base-content/60 font-light max-w-2xl mx-auto">
+          {sectionSubtitle}
+        </p>
+      )}
     </div>
 
-    {
-      variant === "timeline" ? (
-        <ul class="timeline timeline-vertical timeline-snap-icon">
-          {entriesWithContent.map(({ entry, Content }, index) => (
-            <li>
-              {index > 0 && <hr class="bg-base-100" />}
-              <div class="timeline-middle">
-                <IconComponent class={`size-5 text-${color} mx-3 my-1`} />
-              </div>
-              <div
-                class={`timeline-${index % 2 === 0 ? "start" : "end"} pt-3 mb-10`}
-              >
-                <time
-                  class={`font-mono text-sm text-base-content/70 block italic ${index % 2 === 0 ? "text-end" : ""}`}
-                  datetime={
-                    entry.data.startDate
-                      ? toISODateTime(entry.data.startDate) +
-                        (entry.data.endDate
-                          ? "/" + toISODateTime(entry.data.endDate)
-                          : "")
-                      : ""
-                  }
-                >
-                  {formatPeriod(entry.data.startDate, entry.data.endDate)}
-                </time>
-                <div class="card bg-base-100 shadow-xl mt-2">
-                  <div class="card-body">
-                    <div class="flex items-center gap-4 mb-2">
-                      {entry.data.logo && (
-                        <div class="avatar">
-                          <div class="w-12 mask mask-squircle">
-                            <img src={entry.data.logo} alt={entry.data.title} />
-                          </div>
-                        </div>
-                      )}
-                      <div>
-                        <h3 class="card-title">{entry.data.title}</h3>
-                        <p class={`text-${color} font-semibold`}>
-                          {entry.data.subtitle}
-                        </p>
-                      </div>
-                    </div>
-                    <div class="prose prose-sm max-w-none text-base-content/80">
-                      <Content />
-                    </div>
-                    {entry.data.link && (
-                      <div class="card-actions justify-end mt-4">
-                        <a
-                          href={entry.data.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="link link-hover"
-                        >
-                          {collection === "work"
-                            ? "View Company"
-                            : "View Institution"}
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-              {index < entriesWithContent.length - 1 && (
-                <hr class="bg-base-100" />
-              )}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <ul class="list bg-base-100 rounded-box shadow-lg">
-          {entriesWithContent.map(({ entry, Content }, index) => (
-            <li class="border-b hover:opacity-85 transition-opacity border-base-300 last:border-b-0">
-              <details class="collapse">
-                <summary class="collapse-title pe-5">
-                  <div class="list-row p-0 items-center after:hidden">
-                    <div>
-                      {entry.data.logo && (
-                        <div class="avatar">
-                          <div class="w-10 mask mask-squircle">
-                            <img src={entry.data.logo} alt={entry.data.title} />
-                          </div>
-                        </div>
-                      )}
-                    </div>
+    {variant === "timeline" ? (
+      <div class="relative space-y-12">
+        <!-- Vertical Line -->
+        <div class="absolute left-8 top-4 bottom-4 w-px bg-gradient-to-b from-primary/50 via-base-content/10 to-transparent md:left-1/2 md:-ml-px"></div>
 
-                    <div>
-                      <h3 class="font-bold text-lg">{entry.data.title}</h3>
-                      <p class={`text-${color} font-semibold text-sm`}>
-                        {entry.data.subtitle}
-                      </p>
-                    </div>
+        {entriesWithContent.map(({ entry, Content }, index) => (
+          <div class={`relative flex flex-col md:flex-row gap-8 ${index % 2 === 0 ? "md:flex-row-reverse" : ""}`}>
+            
+            <!-- Icon/Dot -->
+            <div class="absolute left-8 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-base-100 border-2 border-primary z-10 mt-1.5 shadow-[0_0_0_4px_rgba(var(--color-base-100))]"></div>
 
-                    <div class="text-sm text-base-content/70 font-mono whitespace-nowrap">
-                      {formatPeriod(entry.data.startDate, entry.data.endDate)}
-                    </div>
-                  </div>
-                </summary>
-
-                <div class="collapse-content">
-                  <div class="prose prose-sm max-w-none text-base-content/80">
-                    <Content />
-                  </div>
-                  {entry.data.link && (
-                    <div class="flex justify-end">
-                      <a
-                        href={entry.data.link}
-                        target="_blank"
-                        class="link link-hover"
-                      >
-                        {collection === "work"
-                          ? "View Company"
-                          : "View Institution"}
-                      </a>
+            <!-- Content Side -->
+            <div class="ml-20 md:ml-0 md:w-1/2 md:px-12 group">
+              <div class="relative p-6 rounded-3xl border border-base-content/5 bg-base-100/50 hover:bg-base-100 hover:border-base-content/10 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+                
+                <!-- Header -->
+                <div class="flex items-center gap-4 mb-4">
+                  {entry.data.logo && (
+                    <div class="w-12 h-12 rounded-xl overflow-hidden bg-base-100 shadow-sm shrink-0 p-1">
+                      <img src={entry.data.logo} alt={entry.data.title} class="w-full h-full object-contain" />
                     </div>
                   )}
+                  <div>
+                    <h3 class="text-xl font-bold text-base-content">{entry.data.title}</h3>
+                    <p class="text-primary font-medium text-sm">{entry.data.subtitle}</p>
+                  </div>
                 </div>
-              </details>
-            </li>
-          ))}
-        </ul>
-      )
-    }
+
+                <!-- Date -->
+                <time class="text-sm font-mono text-base-content/50 mb-4 block">
+                  {formatPeriod(entry.data.startDate, entry.data.endDate)}
+                </time>
+
+                <!-- Content -->
+                <div class="prose prose-sm max-w-none text-base-content/70 prose-p:leading-relaxed">
+                  <Content />
+                </div>
+
+                <!-- Link -->
+                {entry.data.link && (
+                  <div class="mt-4 pt-4 border-t border-base-content/5">
+                    <a
+                      href={entry.data.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center text-sm font-medium text-primary hover:text-primary-focus transition-colors"
+                    >
+                      {collection === "work" ? "Visitar empresa" : "Visitar institución"}
+                      <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <!-- Empty Side for spacing -->
+            <div class="hidden md:block md:w-1/2"></div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div class="grid gap-6 max-w-3xl mx-auto">
+        {entriesWithContent.map(({ entry, Content }, index) => (
+          <div class="group relative bg-base-100 rounded-3xl p-6 border border-base-content/5 hover:border-base-content/10 hover:shadow-lg transition-all duration-300">
+            <div class="flex flex-col sm:flex-row gap-6">
+              <!-- Logo Column -->
+              <div class="shrink-0">
+                {entry.data.logo ? (
+                  <div class="w-16 h-16 rounded-2xl bg-base-200/50 p-2 flex items-center justify-center">
+                    <img src={entry.data.logo} alt={entry.data.title} class="w-full h-full object-contain" />
+                  </div>
+                ) : (
+                  <div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+                    <IconComponent class="size-8" />
+                  </div>
+                )}
+              </div>
+
+              <!-- Content Column -->
+              <div class="flex-1">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                  <h3 class="text-xl font-bold">{entry.data.title}</h3>
+                  <time class="text-sm font-mono text-base-content/50 bg-base-200/50 px-3 py-1 rounded-full whitespace-nowrap">
+                    {formatPeriod(entry.data.startDate, entry.data.endDate)}
+                  </time>
+                </div>
+                
+                <p class="text-primary font-medium mb-4">{entry.data.subtitle}</p>
+                
+                <div class="prose prose-sm max-w-none text-base-content/70">
+                  <Content />
+                </div>
+
+                {entry.data.link && (
+                  <div class="mt-4 flex justify-end">
+                    <a
+                      href={entry.data.link}
+                      target="_blank"
+                      class="text-sm font-medium text-base-content/50 hover:text-primary transition-colors"
+                    >
+                      View Details →
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
   </div>
 </section>

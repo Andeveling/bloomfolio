@@ -1,36 +1,58 @@
 @import "tailwindcss";
+
 @plugin "daisyui" {
-  themes: retro --default;
+  themes: google-labs --default, raycast;
 }
 
 @plugin "daisyui/theme" {
-  name: "retro";
+  name: "google-labs";
   default: true;
   prefersdark: false;
   color-scheme: light;
-  --color-base-100: oklch(91.637% 0.034 90.515);
-  --color-base-200: oklch(88.272% 0.049 91.774);
-  --color-base-300: oklch(84.133% 0.065 90.856);
-  --color-base-content: oklch(41% 0.112 45.904);
-  --color-primary: oklch(82% 0.189 84.429);
-  --color-primary-content: oklch(39% 0.141 25.723);
-  --color-secondary: oklch(79% 0.209 151.711);
-  --color-secondary-content: oklch(44% 0.119 151.328);
-  --color-accent: oklch(68% 0.162 75.834);
-  --color-accent-content: oklch(41% 0.112 45.904);
-  --color-neutral: oklch(44% 0.011 73.639);
-  --color-neutral-content: oklch(86% 0.005 56.366);
-  --color-info: oklch(58% 0.158 241.966);
-  --color-info-content: oklch(96% 0.059 95.617);
-  --color-success: oklch(51% 0.096 186.391);
-  --color-success-content: oklch(96% 0.059 95.617);
-  --color-warning: oklch(64% 0.222 41.116);
-  --color-warning-content: oklch(96% 0.059 95.617);
-  --color-error: oklch(70% 0.191 22.216);
-  --color-error-content: oklch(40% 0.123 38.172);
-  --radius-selector: 0.25rem;
-  --radius-field: 0.25rem;
-  --radius-box: 0.5rem;
+
+  /* Google Labs Inspired Palette */
+  --color-base-100: oklch(100% 0 0);
+  /* Pure White */
+  --color-base-200: oklch(98% 0 0);
+  /* Light Gray (Google Background) */
+  --color-base-300: oklch(95% 0 0);
+  /* Borders */
+  --color-base-content: oklch(20% 0 0);
+  /* Dark Gray Text */
+
+  --color-primary: oklch(56% 0.2 250);
+  /* Google Blue */
+  --color-primary-content: oklch(98% 0 0);
+
+  --color-secondary: oklch(96% 0.03 250);
+  /* Light Blue Background */
+  --color-secondary-content: oklch(56% 0.2 250);
+
+  --color-accent: oklch(65% 0.2 150);
+  /* Google Green */
+  --color-accent-content: oklch(98% 0 0);
+
+  --color-neutral: oklch(20% 0 0);
+  --color-neutral-content: oklch(98% 0 0);
+
+  --color-info: oklch(56% 0.2 250);
+  --color-info-content: oklch(98% 0 0);
+
+  --color-success: oklch(65% 0.2 150);
+  --color-success-content: oklch(98% 0 0);
+
+  --color-warning: oklch(85% 0.18 85);
+  /* Google Yellow */
+  --color-warning-content: oklch(20% 0 0);
+
+  --color-error: oklch(60% 0.22 25);
+  /* Google Red */
+  --color-error-content: oklch(98% 0 0);
+
+  --radius-selector: 1rem;
+  --radius-field: 1rem;
+  --radius-box: 1.5rem;
+  /* More rounded for friendly feel */
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
   --border: 1px;
@@ -38,52 +60,233 @@
   --noise: 0;
 }
 
-/* Blog Card Styles */
-.blog-card {
-  background: linear-gradient(
-    135deg,
-    var(--color-base-100) 0%,
-    oklch(93% 0.02 90) 100%
-  );
+@plugin "daisyui/theme" {
+  name: "raycast";
+  prefersdark: true;
+  color-scheme: dark;
+
+  /* Raycast-inspired Dark Palette */
+  --color-base-100: oklch(14% 0.005 285);
+  /* Deep background */
+  --color-base-200: oklch(18% 0.005 285);
+  /* Secondary background */
+  --color-base-300: oklch(22% 0.005 285);
+  /* Borders/Separators */
+  --color-base-content: oklch(92% 0.005 285);
+  /* Main text */
+
+  --color-primary: oklch(65% 0.22 25);
+  /* Raycast Red/Pink */
+  --color-primary-content: oklch(98% 0 0);
+
+  --color-secondary: oklch(85% 0.05 285);
+  /* Bright accent */
+  --color-secondary-content: oklch(14% 0.005 285);
+
+  --color-accent: oklch(70% 0.15 150);
+  /* Greenish accent */
+  --color-accent-content: oklch(14% 0.005 285);
+
+  --color-neutral: oklch(25% 0.005 285);
+  --color-neutral-content: oklch(80% 0.005 285);
+
+  --color-info: oklch(60% 0.15 240);
+  --color-info-content: oklch(98% 0 0);
+
+  --color-success: oklch(65% 0.15 150);
+  --color-success-content: oklch(14% 0.005 285);
+
+  --color-warning: oklch(80% 0.15 80);
+  --color-warning-content: oklch(14% 0.005 285);
+
+  --color-error: oklch(65% 0.2 25);
+  --color-error-content: oklch(98% 0 0);
+
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.75rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
 }
 
-.blog-card:hover {
-  background: linear-gradient(
-    135deg,
-    var(--color-base-100) 0%,
-    oklch(94% 0.03 85) 100%
-  );
+/* Global Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
 }
 
-/* View Transitions - Blog */
-::view-transition-old(blog-image-*),
-::view-transition-new(blog-image-*) {
-  animation-duration: 0.4s;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+/* Custom Utilities */
+@utility glass-panel {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-::view-transition-old(blog-title-*),
-::view-transition-new(blog-title-*) {
-  animation-duration: 0.35s;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+@utility text-glow {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
-::view-transition-old(blog-description-*),
-::view-transition-new(blog-description-*),
-::view-transition-old(blog-date-*),
-::view-transition-new(blog-date-*),
-::view-transition-old(blog-category-*),
-::view-transition-new(blog-category-*) {
-  animation-duration: 0.3s;
-  animation-timing-function: ease-out;
+/* Line Clamp Utility */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-/* Smooth morph effect for images */
-[style*="view-transition-name: blog-image"] {
-  will-change: transform;
+/* Blog List Item - Raycast Command Palette Style */
+.blog-list-item {
+  @apply flex items-center gap-4 p-3 rounded-lg transition-all duration-200 border border-transparent;
 }
 
-/* Content fade animation during transition */
+.blog-list-item:hover {
+  @apply bg-base-content/5 border-base-content/10;
+}
+
+.blog-list-item.active {
+  @apply bg-base-content/10 border-base-content/20;
+}
+
+/* Typography for Blog Content */
+.prose-raycast {
+  @apply text-base-content/90 leading-relaxed;
+}
+
+.prose-raycast h1,
+.prose-raycast h2,
+.prose-raycast h3,
+.prose-raycast h4 {
+  @apply text-base-content font-semibold tracking-tight mt-10 mb-6;
+}
+
+.prose-raycast h1 {
+  @apply text-4xl;
+}
+
+.prose-raycast h2 {
+  @apply text-2xl border-b border-base-content/10 pb-2;
+}
+
+.prose-raycast h3 {
+  @apply text-xl;
+}
+
+.prose-raycast p {
+  @apply mb-6 text-lg text-base-content/80;
+}
+
+.prose-raycast a {
+  @apply text-primary underline decoration-primary/30 underline-offset-4 hover:decoration-primary transition-all;
+}
+
+.prose-raycast strong {
+  @apply text-base-content font-bold;
+}
+
+.prose-raycast code {
+  @apply px-1.5 py-0.5 rounded bg-base-content/10 text-sm font-mono text-secondary;
+}
+
+.prose-raycast pre {
+  @apply p-4 rounded-xl bg-base-content/5 overflow-x-auto mb-8 border border-base-content/5;
+}
+
+.prose-raycast blockquote {
+  @apply border-l-4 border-primary/50 pl-6 italic text-base-content/70 my-8;
+}
+
+.prose-raycast ul {
+  @apply list-disc list-outside ml-6 mb-6 space-y-2 text-base-content/80;
+}
+
+.prose-raycast ol {
+  @apply list-decimal list-outside ml-6 mb-6 space-y-2 text-base-content/80;
+}
+
+.prose-raycast img {
+  @apply rounded-xl border border-base-content/10 shadow-lg my-8 w-full;
+}
+
+/* Google Labs Prose Style */
+.prose-google {
+  @apply text-base-content leading-loose text-lg md:text-xl max-w-none;
+}
+
+.prose-google h1,
+.prose-google h2,
+.prose-google h3,
+.prose-google h4 {
+  @apply text-base-content font-bold tracking-tight mt-12 mb-6;
+}
+
+.prose-google h1 {
+  @apply text-5xl md:text-6xl;
+}
+
+.prose-google h2 {
+  @apply text-3xl md:text-4xl;
+}
+
+.prose-google h3 {
+  @apply text-2xl md:text-3xl;
+}
+
+.prose-google p {
+  @apply mb-8 text-base-content/80 font-light;
+}
+
+.prose-google a {
+  @apply text-primary font-medium hover:text-primary-focus transition-colors border-b border-primary/30 hover:border-primary;
+}
+
+.prose-google strong {
+  @apply text-base-content font-bold;
+}
+
+.prose-google code {
+  @apply px-2 py-1 rounded-md bg-base-200 text-base font-mono text-primary;
+}
+
+.prose-google pre {
+  @apply p-6 rounded-3xl bg-base-content text-base-100 overflow-x-auto mb-10 shadow-2xl;
+}
+
+.prose-google blockquote {
+  @apply border-l-4 border-primary pl-8 italic text-2xl text-base-content/60 my-12;
+}
+
+.prose-google ul {
+  @apply list-disc list-outside ml-6 mb-8 space-y-3 text-base-content/80;
+}
+
+.prose-google ol {
+  @apply list-decimal list-outside ml-6 mb-8 space-y-3 text-base-content/80;
+}
+
+.prose-google img {
+  @apply rounded-3xl shadow-2xl my-12 w-full transition-transform hover:scale-[1.02] duration-500;
+}
+
+/* View Transitions */
 ::view-transition-group(*) {
-  animation-duration: 0.4s;
+  animation-duration: 0.3s;
+}
+
+/* Smooth Fade for Page Transitions */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+main {
+  animation: fadeIn 0.5s ease-in-out;
 }

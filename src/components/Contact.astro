@@ -1,25 +1,211 @@
 ---
-import { MessageCircleCode, Pickaxe } from "@lucide/astro";
+import {
+  MessageCircleCode,
+  Mail,
+  MapPin,
+  Github,
+  Linkedin,
+  Twitter,
+  Heart,
+} from "@lucide/astro";
+import { siteConfig } from "../config";
 ---
 
-<footer class="footer footer-horizontal footer-center bg-base-200 py-10">
-  <aside>
-    <MessageCircleCode class="inline-block size-20" />
-    <p class="max-w-xl m-auto text-lg">
-      Want to chat? shoot me a dm <a
-        href="https://x.com/leowg"
-        target="_blank"
-        class="link link-hover text-primary"
-        >with a direct question on X (twitter)</a
-      > and I'll respond whenever I can.
-    </p>
-    <p class="text-base-content/60">
-      Copyright © {new Date().getFullYear()} - Crafted by an Artisan <a
-        class="link"
-        href="https://lauroguedes.dev"
-        target="_blank"
-        ><Pickaxe class="size-3 inline-block mr-1" />Lauro Guedes</a
-      >
-    </p>
-  </aside>
+<footer
+  class="relative overflow-hidden bg-gradient-to-b from-base-100 to-base-200"
+>
+  <!-- Animated Background Elements -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div
+      class="absolute top-1/4 -left-48 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse"
+    >
+    </div>
+    <div
+      class="absolute bottom-1/4 -right-48 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse delay-1000"
+    >
+    </div>
+    <div
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-primary/5 to-accent/5 rounded-full blur-3xl"
+    >
+    </div>
+  </div>
+
+  <!-- Contact Section -->
+  <div class="relative py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <h2
+          class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-base-content to-base-content/70 bg-clip-text text-transparent"
+        >
+          ¿Hablamos?
+        </h2>
+        <p class="text-xl text-base-content/60 max-w-2xl mx-auto font-light">
+          Envíame un mensaje directo en X (Twitter) y te responderé cuando pueda
+        </p>
+      </div>
+
+      <!-- CTA Button -->
+      <div class="flex justify-center mb-20">
+        <a
+          href="https://x.com/andeveling"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary to-accent text-base-100 font-semibold rounded-2xl shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 transition-all duration-300 hover:scale-105"
+        >
+          <Twitter
+            class="size-5 transition-transform duration-300 group-hover:rotate-12"
+          />
+          Escríbeme en X
+          <svg
+            class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Info Grid -->
+      <div class="grid md:grid-cols-3 gap-8 mb-16">
+        <!-- Email -->
+        <div
+          class="group text-center p-6 rounded-2xl bg-base-100/50 border border-base-content/5 hover:border-base-content/10 hover:shadow-lg transition-all duration-300"
+        >
+          <div
+            class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary mb-4 group-hover:scale-110 transition-transform duration-300"
+          >
+            <Mail class="size-6" />
+          </div>
+          <h3 class="font-semibold mb-2">Email</h3>
+          <a
+            href="mailto:andeveling@gmail.com"
+            class="text-sm text-base-content/60 hover:text-primary transition-colors"
+          >
+            andeveling@gmail.com
+          </a>
+        </div>
+
+        <!-- Location -->
+        <div
+          class="group text-center p-6 rounded-2xl bg-base-100/50 border border-base-content/5 hover:border-base-content/10 hover:shadow-lg transition-all duration-300"
+        >
+          <div
+            class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-accent/10 text-accent mb-4 group-hover:scale-110 transition-transform duration-300"
+          >
+            <MapPin class="size-6" />
+          </div>
+          <h3 class="font-semibold mb-2">Ubicación</h3>
+          <p class="text-sm text-base-content/60">
+            {siteConfig.location || "Colombia"}
+          </p>
+        </div>
+
+        <!-- Social -->
+        <div
+          class="group text-center p-6 rounded-2xl bg-base-100/50 border border-base-content/5 hover:border-base-content/10 hover:shadow-lg transition-all duration-300"
+        >
+          <div
+            class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary mb-4 group-hover:scale-110 transition-transform duration-300"
+          >
+            <Github class="size-6" />
+          </div>
+          <h3 class="font-semibold mb-2">Sígueme</h3>
+          <div class="flex justify-center gap-3">
+            {
+              siteConfig.socialLinks?.github && (
+                <a
+                  href={siteConfig.socialLinks.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-base-content/60 hover:text-primary transition-colors"
+                  aria-label="GitHub"
+                >
+                  <Github class="size-5" />
+                </a>
+              )
+            }
+            {
+              siteConfig.socialLinks?.linkedin && (
+                <a
+                  href={siteConfig.socialLinks.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-base-content/60 hover:text-primary transition-colors"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin class="size-5" />
+                </a>
+              )
+            }
+            {
+              siteConfig.socialLinks?.twitter && (
+                <a
+                  href={siteConfig.socialLinks.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-base-content/60 hover:text-primary transition-colors"
+                  aria-label="Twitter"
+                >
+                  <Twitter class="size-5" />
+                </a>
+              )
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="relative border-t border-base-content/10">
+    <div class="max-w-6xl mx-auto px-6 py-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <!-- Copyright -->
+        <p class="text-sm text-base-content/60 text-center md:text-left">
+          © {new Date().getFullYear()}
+          {siteConfig.name}. Hecho con
+          <Heart class="inline-block size-4 text-error mx-1 animate-pulse" />
+          en Colombia
+        </p>
+
+        <!-- Credits -->
+        <p class="text-sm text-base-content/50 text-center md:text-right">
+          Diseñado y desarrollado por <a
+            href="https://github.com/andeveling"
+            target="_blank"
+            class="text-primary hover:text-primary-focus transition-colors font-medium"
+          >
+            Andres Parra
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
 </footer>
+
+<style>
+  .delay-1000 {
+    animation-delay: 1s;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  footer:hover .animate-pulse {
+    animation-duration: 3s;
+  }
+</style>
